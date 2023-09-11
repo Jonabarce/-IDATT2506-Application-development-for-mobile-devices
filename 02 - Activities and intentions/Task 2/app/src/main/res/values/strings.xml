@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Activities and intentions</string>
+
+    <string name="multiply">Multipliser</string>
+    <string name="add">Pluss</string>
+    <string name="answer">Answer</string>
+    <string name="upper_limit">Upper limit</string>
+    <string name="right_answer">Riktig svar</string>
+    <string name="wrong_answer">Galt svar. Svaret er </string>
+
 </resources>

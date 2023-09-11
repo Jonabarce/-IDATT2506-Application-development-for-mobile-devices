@@ -1,46 +1,91 @@
 package com.example.activitiesandintentions
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.activitiesandintentions.ui.theme.ActivitiesAndIntentionsTheme
+import kotlin.random.Random
+
 
 class MainActivity : ComponentActivity() {
+    private lateinit var numberOne: TextView
+    private lateinit var numberTwo: TextView
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            ActivitiesAndIntentionsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+        setContentView(R.layout.calculations)
+
+        numberOne = findViewById(R.id.txtNumberOne)
+        numberTwo = findViewById(R.id.txtNumberTwo)
+        val multiPlyButton: Button = findViewById(R.id.btnMultiply)
+        val addButton: Button = findViewById(R.id.btnAdd)
+        val upperBoundEditText = findViewById<EditText>(R.id.edtUpperLimit)
+        val upperBound = upperBoundEditText.text.toString().toIntOrNull() ?: 10
+
+        addButton.setOnClickListener {
+            checkAndShowToast("ADD")
+            val upperBound = upperBoundEditText.text.toString().toIntOrNull() ?: 10
+            generateNumbers(upperBound)
+        }
+
+        multiPlyButton.setOnClickListener {
+            checkAndShowToast("MULTIPLY")
+            val upperBound = upperBoundEditText.text.toString().toIntOrNull() ?: 10
+            generateNumbers(upperBound)
+        }
+
+        generateNumbers(upperBound)
+
+    }
+
+    private fun generateNumbers(upperBound: Int) {
+        val randomNum1 = Random.nextInt(0, upperBound)
+        val randomNum2 = Random.nextInt(0, upperBound)
+
+        numberOne.text = randomNum1.toString()
+        numberTwo.text = randomNum2.toString()
+    }
+
+
+    private fun checkAndShowToast(operation: String) {
+        val num1 = numberOne.text.toString().toIntOrNull()
+        val num2 = numberTwo.text.toString().toIntOrNull()
+        val userAnswer = findViewById<EditText>(R.id.edtAnswer).text.toString().toIntOrNull()
+
+        if (num1 != null && num2 != null && userAnswer != null) {
+            val correctAnswer = sumNumbers(num1, num2, operation)
+
+            if (userAnswer == correctAnswer) {
+                val rightAnswerMessage = getString(R.string.right_answer)
+                showToast(rightAnswerMessage)
+            } else {
+                val wrongAnswerMessage = "${getString(R.string.wrong_answer)} $correctAnswer"
+                showToast(wrongAnswerMessage)
             }
+        } else {
+            val message = getString(R.string.answer)
+            showToast(message)
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ActivitiesAndIntentionsTheme {
-        Greeting("Android")
+    private fun sumNumbers(numberOne: Int, numberTwo: Int, whatToDo: String): Int {
+        return when(whatToDo) {
+            "ADD" -> numberOne + numberTwo
+            "MULTIPLY" -> numberOne * numberTwo
+            else -> 0
+        }
     }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+
+
 }
+
