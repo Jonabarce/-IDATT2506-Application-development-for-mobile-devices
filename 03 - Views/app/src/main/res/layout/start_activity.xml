@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    tools:ignore="MissingClass"
+    android:orientation="horizontal">
+
+
+    <Button
+        android:id="@+id/listFriendsButton"
+        android:layout_width="108dp"
+        android:layout_height="184dp"
+        android:text="Se og rediger venner" />
+
+    <Button
+        android:id="@+id/startAddingFriendsButton"
+        android:layout_width="108dp"
+        android:layout_height="184dp"
+        android:text="Legg til venner" />
+</LinearLayout>

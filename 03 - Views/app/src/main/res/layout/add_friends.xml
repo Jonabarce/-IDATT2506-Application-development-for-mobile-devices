@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add friends"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+
+    <EditText
+        android:id="@+id/name_add_friends"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Legg til navn"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dp_add_friends"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <Button
+        android:id="@+id/btn_add_friends"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Legg til venn i liste"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="20dp" />
+
+</LinearLayout>
