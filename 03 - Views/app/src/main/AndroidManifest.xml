@@ -24,6 +24,8 @@
         </activity>
         <activity android:name=".AddFriendActivity" />
         <activity android:name=".EditFriendActivity" />
+        <activity android:name=".ListFriendsActivity" />
+
     </application>
 
 </manifest>

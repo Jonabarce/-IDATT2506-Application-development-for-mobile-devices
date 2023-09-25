@@ -20,7 +20,7 @@ class StartActivity : Activity() {
 
         val listFriendsButton: Button = findViewById(R.id.listFriendsButton)
         listFriendsButton.setOnClickListener {
-            startActivity(Intent(this, EditFriendActivity::class.java))
+            startActivity(Intent(this, ListFriendsActivity::class.java))
         }
 
     }
