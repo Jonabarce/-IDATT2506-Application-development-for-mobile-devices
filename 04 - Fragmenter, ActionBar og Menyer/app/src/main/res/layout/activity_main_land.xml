@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/list_fragment"
+        android:name="com.example.task4.MovieListFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:layout_gravity="top" />
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="com.example.task4.MovieDetailFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:layout_gravity="top" />
+
+</LinearLayout>
