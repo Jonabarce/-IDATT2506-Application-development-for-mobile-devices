@@ -31,7 +31,6 @@ class StartActivity : Activity() {
             add(Movie(dummyImageResId, "Avengers", "En film om superhelter."))
             add(Movie(dummyImageResId2, "Inception", "En film om drømmer innen drømmer."))
             add(Movie(dummyImageResId3, "Interstellar", "En film om romfart."))
-            add(Movie(dummyImageResId2, "The Dark Knight", "En film om en mørk ridder."))
             add(Movie(dummyImageResId, "The Prestige", "En film om magi."))
 
         }
