@@ -1,6 +1,7 @@
 package com.example.sockets
 
 import android.os.Build
+import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import kotlinx.coroutines.CoroutineScope
@@ -15,15 +16,6 @@ import java.net.ServerSocket
 import java.net.Socket
 
 class Server(private val textView: TextView, private val PORT: Int = 12345) {
-
-    /**
-     * Egendefinert set() som gjør at vi enkelt kan endre teksten som vises i skjermen til
-     * emulatoren med
-     *
-     * ```
-     * ui = "noe"
-     * ```
-     */
     private var ui: String? = ""
         set(str) {
             MainScope().launch { textView.text = str }
@@ -33,30 +25,30 @@ class Server(private val textView: TextView, private val PORT: Int = 12345) {
     @RequiresApi(Build.VERSION_CODES.KITKAT)
     fun start() {
         CoroutineScope(Dispatchers.IO).launch {
-
             try {
                 ui = "Starter Tjener ..."
-                // "innapropriate blocking method call" advarsel betyr at tråden
-                // stopper helt opp og ikke går til neste linje før denne fullfører, i dette
-                // eksempelet er ikke dette så farlig så vi ignorerer advarselen.
-                ServerSocket(PORT).use { serverSocket: ServerSocket ->
-
+                ServerSocket(PORT).use { serverSocket ->
                     ui = "ServerSocket opprettet, venter på at en klient kobler seg til...."
-
-                    serverSocket.accept().use { clientSocket: Socket ->
-
-                        ui = "En Klient koblet seg til:\n$clientSocket"
-
-                        //send tekst til klienten
-                        sendToClient(clientSocket, "Velkommen Klient!")
-
-                        // Hent tekst fra klienten
-                        readFromClient(clientSocket)
+                    Log.d("Server", "ServerSocket opprettet, venter på at en klient kobler seg til....")
+                    while (true) {
+                        val clientSocket: Socket = serverSocket.accept()
+                        CoroutineScope(Dispatchers.IO).launch {
+                            handleClient(clientSocket)
+                        }
                     }
                 }
             } catch (e: IOException) {
                 e.printStackTrace()
                 ui = e.message
+            }
+        }
+    }
+
+    private fun handleClient(clientSocket: Socket) {
+        clientSocket.use {
+            ui = "En Klient koblet seg til:\n$clientSocket"
+            while (true) {
+                readFromClient(clientSocket)
             }
         }
     }

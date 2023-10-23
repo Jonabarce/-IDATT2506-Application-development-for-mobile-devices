@@ -1,7 +1,11 @@
 package com.example.sockets
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -9,17 +13,18 @@ import androidx.activity.ComponentActivity
 class MainActivity : ComponentActivity() {
 
     private lateinit var client: Client
-    private lateinit var serverMessageTextView: TextView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_activity) // La oss anta at det er en layout-fil for denne aktiviteten.
+        setContentView(R.layout.main_activity)
 
-        serverMessageTextView = findViewById(R.id.serverMessageTextView) // Dette er en TextView i din XML for å vise servermeldinger.
+        val tvDummy = findViewById<TextView>(R.id.serverMessageTextView)
 
-        client = Client(serverMessageTextView)
+
+        client = Client(tvDummy)
         client.start()
 
-        // Når klienten mottar en melding fra serveren, vil den oppdatere serverMessageTextView via sin "ui" -eiendom.
+
     }
 }

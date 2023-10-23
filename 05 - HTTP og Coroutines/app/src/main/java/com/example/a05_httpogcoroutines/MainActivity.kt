@@ -70,13 +70,22 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         val response = client.newCall(request).execute()
+        val responseBody = response.body?.string() ?: "Serveren svarte ikke."
+        var fixedString = responseBody.trim()
 
-        val originalResponse = response.body?.string()?.trim()
-        val fixedString = String(originalResponse?.toByteArray(Charsets.ISO_8859_1) ?: byteArrayOf(), Charsets.UTF_8)
+        // Manuell korreksjon av tegn
+        fixedString = fixedString.replace("Ã¥", "å")
+        fixedString = fixedString.replace("Ã¥", "Å")
+        fixedString = fixedString.replace("Ã¸", "ø")
+        fixedString = fixedString.replace("Ã˜", "Ø")
+        fixedString = fixedString.replace("Ã¦", "æ")
+        fixedString = fixedString.replace("Ã†", "Æ")
+
         Log.d("MainActivity", "Server response: $fixedString")
         response.body?.close()
-        return fixedString ?: "Serveren svarte ikke."
+        return fixedString
     }
+
 
     private fun goToStartActivity() {
         val intent = Intent(this, StartActivity::class.java)

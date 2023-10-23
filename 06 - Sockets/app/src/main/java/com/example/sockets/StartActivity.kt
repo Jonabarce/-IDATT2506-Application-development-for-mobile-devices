@@ -15,11 +15,9 @@ class StartActivity : Activity() {
 
         val tvDummy = TextView(this)
         server = Server(tvDummy)
+        server.start()
 
         findViewById<Button>(R.id.btn_start_chat).setOnClickListener {
-            // Start serveren
-            server.start()
-            // Gå til MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
