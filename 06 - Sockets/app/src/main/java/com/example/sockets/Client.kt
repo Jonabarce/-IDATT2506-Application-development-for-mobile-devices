@@ -28,6 +28,7 @@ class Client(
             try {
                 clientSocket = Socket(SERVER_IP, SERVER_PORT)
                 ui = "Koblet til tjener:\n$clientSocket"
+                Log.d("Client", "Koblet til tjener:\n$clientSocket")
                 while (true) {
                     readFromServer(clientSocket!!)
                 }

@@ -8,25 +8,34 @@
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/serverMessageTextView"
+        android:id="@+id/tvReceived"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Venter på melding fra tjener..."
-        android:textSize="18sp" />
+        android:text="Melding sendt fra klient til tjener"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:id="@+id/tvSent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Melding sendt fra tjener til klient"
+        android:textSize="18sp"
+        android:layout_marginBottom="16dp" />
 
     <EditText
-        android:id="@+id/inputMessageEditText"
+        android:id="@+id/editMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Skriv melding her..."
+        android:hint="Melding"
         android:layout_marginTop="16dp"
         android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/sendMessageButton"
+        android:id="@+id/btnSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Send Melding"
+        android:text="SEND"
         android:layout_marginTop="16dp" />
 
 </LinearLayout>
