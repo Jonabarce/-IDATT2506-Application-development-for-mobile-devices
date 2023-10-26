@@ -11,7 +11,7 @@ import java.net.Socket
 
 class Client(
     private val textView: TextView,
-    private val SERVER_IP: String = "127.0.0.1",
+    private val SERVER_IP: String = "10.0.2.2",
     private val SERVER_PORT: Int = 12345
 ) {
     private var ui: String? = ""

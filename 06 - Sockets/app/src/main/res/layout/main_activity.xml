@@ -15,13 +15,20 @@
         android:textSize="18sp"
         android:layout_marginBottom="16dp" />
 
-    <TextView
-        android:id="@+id/tvSent"
+    <ListView
+        android:id="@+id/lvReceived"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Melding sendt fra tjener til klient"
-        android:textSize="18sp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginBottom="16dp" />
+
+    <ListView
+        android:id="@+id/lvSent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="16dp" />
+
 
     <EditText
         android:id="@+id/editMessage"

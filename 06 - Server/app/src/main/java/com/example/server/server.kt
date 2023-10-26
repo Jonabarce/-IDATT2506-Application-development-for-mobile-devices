@@ -1,4 +1,4 @@
-package com.example.sockets
+package com.example.server
 
 import android.os.Build
 import android.util.Log
@@ -45,6 +45,7 @@ class Server(private val textView: TextView, private val PORT: Int = 12345) {
             } catch (e: IOException) {
                 e.printStackTrace()
                 ui = e.message
+                Log.d("Server", e.message!!)
             }
         }
     }
@@ -52,6 +53,7 @@ class Server(private val textView: TextView, private val PORT: Int = 12345) {
     private fun handleClient(clientSocket: Socket) {
         try {
             ui = "En Klient koblet seg til:\n$clientSocket"
+            Log.d("Server", "En Klient koblet seg til:\n$clientSocket")
             while (true) {
                 readFromClient(clientSocket)
             }
