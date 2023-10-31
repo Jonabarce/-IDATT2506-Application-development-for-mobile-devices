@@ -1,5 +1,6 @@
 package com.example.datalagring
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
@@ -101,7 +102,7 @@ open class DatabaseManager(context: Context) :
     fun insertMovie(title: String, director: String, actors: List<String>): Long {
         val database = this.writableDatabase
 
-        val directorId = insertDirector(database, director)
+        val directorId: Long = getDirectorId(director) ?: insertDirector(database, director)
 
         val values = ContentValues()
         values.put(COLUMN_TITLE, title)
@@ -109,11 +110,47 @@ open class DatabaseManager(context: Context) :
         val movieId = database.insert(MOVIES_TABLE_NAME, null, values)
 
         actors.forEach { actor ->
-            val actorId = insertActor(database, actor)
+            val actorId: Long = getActorId(actor) ?: insertActor(database, actor)
             insertMovieActor(database, movieId, actorId)
         }
 
         return movieId
+    }
+
+    @SuppressLint("Range")
+    fun getDirectorId(directorName: String): Long? {
+        val database = this.readableDatabase
+        val cursor = database.query(
+            DIRECTORS_TABLE_NAME,
+            arrayOf(DIRECTOR_ID),
+            "$COLUMN_DIRECTOR_NAME = ?",
+            arrayOf(directorName),
+            null, null, null)
+
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                return cursor.getLong(cursor.getColumnIndex(DIRECTOR_ID))
+            }
+        }
+        return null
+    }
+
+    @SuppressLint("Range")
+    fun getActorId(actorName: String): Long? {
+        val database = this.readableDatabase
+        val cursor = database.query(
+            ACTORS_TABLE_NAME,
+            arrayOf(ACTOR_ID),
+            "$COLUMN_ACTOR_NAME = ?",
+            arrayOf(actorName),
+            null, null, null)
+
+        cursor?.use {
+            if (cursor.moveToFirst()) {
+                return cursor.getLong(cursor.getColumnIndex(ACTOR_ID))
+            }
+        }
+        return null
     }
 
     private fun readFromCursor(cursor: Cursor, numberOfColumns: Int ):
