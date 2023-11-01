@@ -61,6 +61,7 @@ open class DatabaseManager(context: Context) :
         db?.execSQL("DROP TABLE IF EXISTS $MOVIES_TABLE_NAME")
         db?.execSQL("DROP TABLE IF EXISTS $DIRECTORS_TABLE_NAME")
         db?.execSQL("DROP TABLE IF EXISTS $ACTORS_TABLE_NAME")
+        db?.execSQL("DROP TABLE IF EXISTS $MOVIE_ACTORS_TABLE_NAME")
         onCreate(db)    }
 
     fun clearAllData() {
@@ -68,6 +69,7 @@ open class DatabaseManager(context: Context) :
             db.execSQL("DELETE FROM $MOVIES_TABLE_NAME")
             db.execSQL("DELETE FROM $DIRECTORS_TABLE_NAME")
             db.execSQL("DELETE FROM $ACTORS_TABLE_NAME")
+            db.execSQL("DELETE FROM $MOVIE_ACTORS_TABLE_NAME")
         }
     }
     private fun insertValue(
