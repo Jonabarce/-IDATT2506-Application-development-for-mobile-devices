@@ -72,15 +72,6 @@ open class DatabaseManager(context: Context) :
             db.execSQL("DELETE FROM $MOVIE_ACTORS_TABLE_NAME")
         }
     }
-    private fun insertValue(
-        database: SQLiteDatabase,
-        table: String,
-        field: String,
-        value: String ): Long {
-        val values = ContentValues()
-        values.put(field, value.trim())
-        return database.insert(table, null, values)
-    }
 
     private fun insertDirector(database: SQLiteDatabase, directorName: String): Long {
         val values = ContentValues()
