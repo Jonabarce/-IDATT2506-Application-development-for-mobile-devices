@@ -1,0 +1,10 @@
+{
+    "nb":{
+        "name": "Norwegian Bokmål",
+        "nativeName": "Norsk bokmål"
+    },
+    "en": {
+        "name": "English",
+        "nativeName": "English"
+    }
+}
