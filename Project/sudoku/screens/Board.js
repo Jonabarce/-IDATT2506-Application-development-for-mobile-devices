@@ -1,8 +1,26 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { View, StyleSheet } from 'react-native';
 import Box from '../components/Box';
 
+
+const getSudokuPuzzle = async (difficulty) => {
+    try {
+        let response = await fetch(``);
+        console.log('response', response);
+    } catch (error) {
+        console.error('Error fetching Sudoku puzzle:', error);
+    }
+};
+
+
+
 export default function Board() {
+
+    useEffect(() => {
+        getSudokuPuzzle('easy');
+    }, []);
+
+
     return (
         <View style={styles.boardHolder}>
         <View style={styles.board}>
