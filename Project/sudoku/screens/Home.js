@@ -15,8 +15,8 @@ export default function Home() {
             navigation.navigate('Board');
         }else if(action === 'action2'){
             console.log('action2')
-        }else {
-            console.log('action3')
+        }else if(action === 'action3') {
+            navigation.navigate('Rules');
         }
     }
 

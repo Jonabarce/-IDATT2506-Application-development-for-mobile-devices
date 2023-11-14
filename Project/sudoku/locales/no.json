@@ -2,5 +2,10 @@
     "menuButtonOneLandingPage": "Start nytt brett",
     "menuButtonTwoLandingPage": "Gå tilbake til lagrede brett",
     "menuButtonThreeLandingPage": "Vis regler",
-    "menuButtonFourLandingPage": "Bytt Språk"
+    "menuButtonFourLandingPage": "Bytt Språk",
+    "content": "Sudoku er et tallpuslespill som spilles på et 9x9 rutenett. Målet er å fylle inn alle de tomme cellene med tall fra 1 til 9. Hver rad, kolonne, og 3x3 region må inneholde alle tallene fra 1 til 9, uten gjentakelse. Her er noen tips for å komme i gang:",
+    "rule1": "Start med de gitte tallene: Begynn med å identifisere tallene som allerede er fylt inn på brettet. Disse er startpunktene dine og vil hjelpe deg med å komme i gang.",
+    "rule2": "Bruk logikk: Sudoku er et spill basert på logikk. Søk etter rader, kolonner, eller regioner der et bestemt tall mangler, og deduser logisk hvor det skal plasseres.",
+    "rule3": "Eliminasjon: Hvis du finner en celle der bare ett tall er mulig, kan du trygt plassere det der.",
+    "rule4": "Vær tålmodig: Sudoku-puslespill varierer i vanskelighetsgrad. Noen kan løses raskt, mens andre krever mer tid og grundig tenkning. Fortsett å prøve, og du vil forbedre ferdighetene dine!"
 }

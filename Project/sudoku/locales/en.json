@@ -2,5 +2,10 @@
     "menuButtonOneLandingPage": "Start New Board",
     "menuButtonTwoLandingPage": "Return to saved boards",
     "menuButtonThreeLandingPage": "Show Rules",
-    "menuButtonFourLandingPage": "Change Language"
+    "menuButtonFourLandingPage": "Change Language",
+    "content": "Sudoku is a number puzzle game played on a 9x9 grid. The goal is to fill in all the empty cells with numbers from 1 to 9. Each row, column, and 3x3 region must contain all the numbers from 1 to 9, without repetition.",
+    "rule1": "Start with the given numbers: Begin by identifying the numbers that are already filled in on the grid. These are your starting points and will help you make progress.",
+    "rule2": "Use logic: Sudoku is a game of logic. Look for rows, columns, or regions where a specific number is missing, and logically deduce where it should go.",
+    "rule3": "Elimination: If you find a cell where only one number is possible, go ahead and place it there.",
+    "rule4": "Be patient: Sudoku puzzles vary in difficulty. Some can be solved quickly, while others require more time and careful thinking. Keep trying, and you'll improve your skills!"
 }

@@ -15,7 +15,6 @@ const Box = () => {
 };
 
 const boxBorderWidth = 2;
-const cellBorderWidth = 1;
 const boxSize = Dimensions.get('window').width / 3 - boxBorderWidth * 2;
 
 const styles = StyleSheet.create({
