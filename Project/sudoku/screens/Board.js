@@ -1,18 +1,56 @@
-import React, {useEffect} from 'react';
-import { View, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, Button } from 'react-native';
 import Box from '../components/Box';
+import easyBoard from '../assets/data/easy.json';
+import normalBoard from '../assets/data/normal.json';
+import hardBoard from '../assets/data/hard.json';
+
 
 
 export default function Board() {
+    const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+    const [boardData, setBoardData] = useState([]);
+    const [selectedCell, setSelectedCell] = useState(null);
 
+
+    useEffect(() => {
+        if (selectedDifficulty) {
+            loadBoard(selectedDifficulty);
+        }
+    }, [selectedDifficulty]);
+
+
+    const loadBoard = (difficulty) => {
+        switch(difficulty) {
+            case 'easy':
+                setBoardData(easyBoard);
+                break;
+            case 'normal':
+                setBoardData(normalBoard);
+                break;
+            case 'hard':
+                setBoardData(hardBoard);
+                break;
+            default:
+                setBoardData(null);
+        }
+    };
 
     return (
         <View style={styles.boardHolder}>
-        <View style={styles.board}>
-            {[...Array(9)].map((_, index) => (
-                <Box key={index} style={styles.box} />
-            ))}
-        </View>
+            {boardData.length > 0 ? (
+                <View style={styles.board}>
+                    {boardData.map((row, rowIndex) => (
+                        <Box key={rowIndex} rowData={row} />
+                    ))}
+                </View>
+            ) : (
+                <View>
+                    <Button title="Easy" onPress={() => setSelectedDifficulty('easy')} />
+                    <Button title="Normal" onPress={() => setSelectedDifficulty('normal')} />
+                    <Button title="Hard" onPress={() => setSelectedDifficulty('hard')} />
+                </View>
+            )}
         </View>
     );
 }

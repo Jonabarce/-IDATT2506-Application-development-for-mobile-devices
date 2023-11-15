@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 const Cell = ({ number }) => {
     return (
         <TouchableOpacity style={styles.cell}>
-            <Text style={styles.cellText}>{number}</Text>
+            <Text style={styles.cellText}>{number === null ? '' : number}</Text>
         </TouchableOpacity>
     );
 };
