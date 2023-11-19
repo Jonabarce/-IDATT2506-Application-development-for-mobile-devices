@@ -5,7 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Box from '../components/Box';
 import NumbersToSelect from '../components/NumbersToSelect';
 import {useTranslation} from "react-i18next";
-
+import easyBoard from '../assets/data/easy.json';
+import normalBoard from '../assets/data/normal.json';
+import hardBoard from '../assets/data/hard.json';
 
 
 
@@ -15,6 +17,23 @@ const [boardData, setBoardData] = useState([]);
 const [solution, setSolution] = useState([]);
 const [selectedCell, setSelectedCell] = useState(null);
 const { t } = useTranslation();
+
+    useEffect(() => {
+        saveBoardFirstTime();
+    }, []);
+
+    const saveBoardFirstTime = async () => {
+        try {
+            const currentBoards = await AsyncStorage.getItem('currentBoardsToPlayWith');
+            if (!currentBoards) {
+                const boardsToSave = [easyBoard, normalBoard, hardBoard];
+                await AsyncStorage.setItem('currentBoardsToPlayWith', JSON.stringify(boardsToSave));
+                showToast(t('boardsSaved'));
+            }
+        } catch (error) {
+            showToast(t('saveBoardError'));
+        }
+    };
 
     function showToast (text) {
         ToastAndroid.show(text, ToastAndroid.SHORT);
