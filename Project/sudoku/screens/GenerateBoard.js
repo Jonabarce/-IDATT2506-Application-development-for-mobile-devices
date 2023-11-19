@@ -75,6 +75,7 @@ const { t } = useTranslation();
                 setBoardData(grid.value);
                 console.log("Solution:", grid.solution);
                 setSolution(grid.solution);
+                console.log("Difficulty:", grid.difficulty);
                 setSelectedDifficulty(difficulty);
             } catch (jsonError) {
                 console.error("JSON Parsing Error:", jsonError);
