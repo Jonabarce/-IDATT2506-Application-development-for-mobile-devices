@@ -2,15 +2,22 @@ import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import Cell from '../components/Cell';
 
-const Box = ({ rowData }) => {
+const Box = ({ rowData, rowIndex, onSelectCell }) => {
     return (
         <View style={styles.box}>
-            {rowData.map((number, index) => (
-                <Cell key={index} number={number} />
+            {rowData.map((number, cellIndex) => (
+                <Cell
+                    key={cellIndex}
+                    number={number}
+                    onSelect={() => onSelectCell([rowIndex, cellIndex])}
+                />
             ))}
         </View>
     );
-}
+};
+
+
+
 
 const boxBorderWidth = 2;
 const boxSize = Dimensions.get('window').width / 3 - boxBorderWidth * 2;

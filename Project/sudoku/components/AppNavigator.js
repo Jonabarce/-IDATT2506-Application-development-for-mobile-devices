@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BoardScreen from '../screens/Board';
 import HomeScreen from '../screens/Home';
 import RulesScreen from '../screens/Rules';
+import GenerateBoardScreen from "../screens/GenerateBoard";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,6 +13,7 @@ export default function AppNavigator() {
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen name="Home" component={HomeScreen} />
                 <Stack.Screen name="Board" component={BoardScreen} />
+                <Stack.Screen name="GenerateBoard" component={GenerateBoardScreen} />
                 <Stack.Screen name="Rules" component={RulesScreen} />
             </Stack.Navigator>
         </NavigationContainer>

@@ -14,7 +14,7 @@ export default function Home() {
         if(action === 'action1'){
             navigation.navigate('Board');
         }else if(action === 'action2'){
-            console.log('action2')
+            navigation.navigate('GenerateBoard');
         }else if(action === 'action3') {
             navigation.navigate('Rules');
         }
@@ -47,16 +47,16 @@ export default function Home() {
                 </View>
             </Modal>
             <Text className="text-6xl ">SODUKO</Text>
-            <Pressable className="bg-gray-200 p-2 rounded-lg mx-5 mt-20" onPress={() => handleClick('action1')} >
+            <Pressable className="bg-gray-200 w-full p-2 rounded-lg flex items-center" onPress={() => handleClick('action1')} >
                 <Text className="text-3xl text-red-500">{t('menuButtonOneLandingPage')}</Text>
             </Pressable>
-            <Pressable className="bg-gray-200 p-2 rounded-lg" onPress={() => handleClick('action2')} >
+            <Pressable className="bg-gray-200 w-full p-2 rounded-lg flex items-center" onPress={() => handleClick('action2')} >
                 <Text className="text-3xl text-red-500">{t('menuButtonTwoLandingPage')}</Text>
             </Pressable>
-            <Pressable className="bg-gray-200 p-2 rounded-lg" onPress={() => handleClick('action3')} >
+            <Pressable className="bg-gray-200 w-full p-2 rounded-lg flex items-center" onPress={() => handleClick('action3')} >
                 <Text className="text-3xl text-red-500">{t('menuButtonThreeLandingPage')}</Text>
             </Pressable>
-            <Pressable className="bg-gray-200 p-2 rounded-lg" onPress={() => setVisible(true)} >
+            <Pressable className="bg-gray-200 w-full p-2 rounded-lg flex items-center" onPress={() => setVisible(true)} >
                 <Text className="text-3xl text-red-500">{t('menuButtonFourLandingPage')}</Text>
             </Pressable>
         </View>

@@ -1,59 +1,201 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button } from 'react-native';
+import {View, StyleSheet, ToastAndroid, Button, Alert, Pressable, Text} from 'react-native';
+import i18next from "../services/i18next";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Box from '../components/Box';
+import NumbersToSelect from '../components/NumbersToSelect';
+import {useTranslation} from "react-i18next";
 import easyBoard from '../assets/data/easy.json';
 import normalBoard from '../assets/data/normal.json';
 import hardBoard from '../assets/data/hard.json';
 
 
-
 export default function Board() {
     const [selectedDifficulty, setSelectedDifficulty] = useState(null);
     const [boardData, setBoardData] = useState([]);
+    const [solution, setSolution] = useState([]);
     const [selectedCell, setSelectedCell] = useState(null);
+    const { t } = useTranslation();
 
+    function showToast (text) {
+        ToastAndroid.show(text, ToastAndroid.SHORT);
+    }
 
     useEffect(() => {
-        if (selectedDifficulty) {
-            loadBoard(selectedDifficulty);
-        }
-    }, [selectedDifficulty]);
+        checkForSavedBoard();
+        saveBoardFirstTime();
+    }, []);
 
+    const setTheBoardData = (savedBoard, savedSolution) => {
+        setBoardData(savedBoard);
+        setSolution(savedSolution);
+    }
 
-    const loadBoard = (difficulty) => {
-        switch(difficulty) {
-            case 'easy':
-                setBoardData(easyBoard);
-                break;
-            case 'normal':
-                setBoardData(normalBoard);
-                break;
-            case 'hard':
-                setBoardData(hardBoard);
-                break;
-            default:
-                setBoardData(null);
+    const checkForSavedBoard = async () => {
+        try {
+            const savedBoardString = await AsyncStorage.getItem('currentBoard');
+            const savedSolutionString = await AsyncStorage.getItem('currentBoardSolution');
+            const savedBoard = savedBoardString ? JSON.parse(savedBoardString) : null;
+            const savedSolution = savedSolutionString ? JSON.parse(savedSolutionString) : null;
+            console.log("Saved solution:", savedSolution);
+            console.log("Saved board:", savedBoard);
+
+            if (savedBoard && savedSolution) {
+                Alert.alert(
+                    t('title'),
+                    t('message'),
+                    [
+                        {
+                            text: t('textNo'),
+                            style: 'cancel',
+                        },
+                        {
+                            text: t('textYes'),
+                            onPress: () => {
+                                setTheBoardData(savedBoard, savedSolution);
+                            },
+                        },
+                    ],
+                    { cancelable: false }
+                );
+            }
+        } catch (error) {
+            showToast(t('failedToLoadBoard'));
         }
     };
+
+    const updateCell = (newValue) => {
+        if (selectedCell) {
+            const [rowIndex, cellIndex] = selectedCell;
+            let selectedCellData = boardData[rowIndex][cellIndex];
+
+            if (selectedCellData.isPredefined) {
+                showToast('Dette tallet kan ikke endres eller slettes.');
+            } else {
+                let newBoardData = [...boardData];
+                if (newValue === 'Delete') {
+                    newBoardData[rowIndex][cellIndex].value = "";
+                    newBoardData[rowIndex][cellIndex].color = 'transparent';
+                } else if (newValue === 'Red') {
+                    newBoardData[rowIndex][cellIndex].color = "red";
+                }
+                else {
+                    newBoardData[rowIndex][cellIndex].value = newValue;
+                    newBoardData[rowIndex][cellIndex].color = 'transparent';
+                }
+                setBoardData(newBoardData);
+                setSelectedCell(null);
+
+                if (checkIfBoardIsSolved()) {
+                    showToast("Gratulerer, du har løst brettet!");
+                }
+                saveBoardToStorage(newBoardData, solution);
+            }
+        }
+    }
+
+    const loadBoard = async (difficulty) => {
+        try {
+            const currentBoards = await AsyncStorage.getItem('currentBoardsToPlayWith');
+            let boards = currentBoards ? JSON.parse(currentBoards) : [];
+            console.log("Boards:", boards.length);
+            let filteredBoards = boards.filter(board => board.difficulty === difficulty);
+            console.log("Filtered boards:", filteredBoards);
+            if (filteredBoards.length > 0) {
+                let randomIndex = Math.floor(Math.random() * filteredBoards.length);
+                let boardDetails = filteredBoards[randomIndex];
+                const convertedBoard = boardDetails.board.map(row =>
+                    row.map(cell => ({
+                        value: cell,
+                        isPredefined: cell !== null
+                    }))
+                );
+                setBoardData(convertedBoard);
+                console.log("Solution:", boardDetails.solution);
+                setSolution(boardDetails.solution);
+                setSelectedDifficulty(difficulty);
+            } else {
+                showToast("Fant ingen brett med vanskelighetsgraden: " + difficulty);
+            }
+        } catch (error) {
+            showToast(t('failedToLoadBoard') + ": " + error.message);
+        }
+    };
+
+    const saveBoardToStorage = async (boardToSave, solutionToSave) => {
+        try {
+            console.log("Saving board:", boardToSave);
+            console.log("Saving solution:", solutionToSave);
+            await AsyncStorage.setItem('currentBoard', JSON.stringify(boardToSave));
+            if (solutionToSave) {
+                await AsyncStorage.setItem('currentBoardSolution', JSON.stringify(solutionToSave));
+            } else {
+                console.log("Solution is undefined, not saving.");
+            }
+        } catch (error) {
+            console.log("Error saving to storage:", error);
+            showToast(t('saveBoardError'));
+        }
+    };
+
+
+
+    const saveBoardFirstTime = async () => {
+        try {
+            const currentBoards = await AsyncStorage.getItem('currentBoardsToPlayWith');
+            if (!currentBoards) {
+                const boardsToSave = [easyBoard, normalBoard, hardBoard];
+                await AsyncStorage.setItem('currentBoardsToPlayWith', JSON.stringify(boardsToSave));
+                showToast(t('boardsSaved'));
+            }
+        } catch (error) {
+            showToast(t('saveBoardError'));
+        }
+    };
+
+    const checkIfBoardIsSolved = () => {
+        for (let i = 0; i < boardData.length; i++) {
+            for (let j = 0; j < boardData[i].length; j++) {
+                if (boardData[i][j].value !== solution[i][j]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    };
+
 
     return (
         <View style={styles.boardHolder}>
             {boardData.length > 0 ? (
                 <View style={styles.board}>
                     {boardData.map((row, rowIndex) => (
-                        <Box key={rowIndex} rowData={row} />
+                        <Box
+                            key={rowIndex}
+                            rowData={row}
+                            rowIndex={rowIndex}
+                            onSelectCell={setSelectedCell}
+                        />
                     ))}
+                    <NumbersToSelect onSelectNumber={updateCell} />
                 </View>
             ) : (
                 <View>
-                    <Button title="Easy" onPress={() => setSelectedDifficulty('easy')} />
-                    <Button title="Normal" onPress={() => setSelectedDifficulty('normal')} />
-                    <Button title="Hard" onPress={() => setSelectedDifficulty('hard')} />
+                    <Pressable className="bg-green-400 p-2 rounded-lg"  onPress={() => loadBoard('easy')} >
+                        <Text >{t('easyBoard')}</Text>
+                    </Pressable>
+                    <Pressable className="bg-yellow-300 p-2 rounded-lg" onPress={() => loadBoard('normal')} >
+                        <Text >{t('normalBoard')}</Text>
+                    </Pressable>
+                    <Pressable className="bg-red-500 p-2 rounded-lg" onPress={() => loadBoard('hard')} >
+                        <Text >{t('hardBoard')}</Text>
+                    </Pressable>
                 </View>
             )}
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     board: {
