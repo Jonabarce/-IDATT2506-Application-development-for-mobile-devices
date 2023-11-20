@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const Cell = ({ number, cellColor, onSelect }) => {
+const Cell = ({ number, cellColor, onSelect, isPredefined, isUncertain }) => {
+    const backgroundColor = isUncertain ? 'red' : isPredefined ? 'lightgray' : cellColor || 'transparent';
+
     return (
         <TouchableOpacity
-            style={[styles.cell, { backgroundColor: cellColor || 'transparent' }]} onPress={onSelect}>
+            style={[styles.cell, { backgroundColor }]}
+            onPress={onSelect}
+        >
             <Text style={styles.cellText}>{number.value === null ? '' : number.value}</Text>
         </TouchableOpacity>
     );

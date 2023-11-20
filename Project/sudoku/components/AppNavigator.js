@@ -4,18 +4,72 @@ import BoardScreen from '../screens/Board';
 import HomeScreen from '../screens/Home';
 import RulesScreen from '../screens/Rules';
 import GenerateBoardScreen from "../screens/GenerateBoard";
+import {StyleSheet} from "react-native";
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
     return (
-        <NavigationContainer>
+        <NavigationContainer >
             <Stack.Navigator initialRouteName="Home">
-                <Stack.Screen name="Home" component={HomeScreen} />
-                <Stack.Screen name="Board" component={BoardScreen} />
-                <Stack.Screen name="GenerateBoard" component={GenerateBoardScreen} />
-                <Stack.Screen name="Rules" component={RulesScreen} />
+                <Stack.Screen
+                    name="Home"
+                    component={HomeScreen}
+                    options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: '#121212',
+                        },
+                        headerTintColor: '#FFFFFF',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Board"
+                    component={BoardScreen}
+                    options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: '#121212',
+                        },
+                        headerTintColor: '#FFFFFF',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="GenerateBoard"
+                    component={GenerateBoardScreen}
+                    options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: '#121212',
+                        },
+                        headerTintColor: '#FFFFFF',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}
+                />
+                <Stack.Screen
+                    name="Rules"
+                    component={RulesScreen}
+                    options={{
+                        title: '',
+                        headerStyle: {
+                            backgroundColor: '#121212',
+                        },
+                        headerTintColor: '#FFFFFF',
+                        headerTitleStyle: {
+                            fontWeight: 'bold',
+                        },
+                    }}
+                />
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
+

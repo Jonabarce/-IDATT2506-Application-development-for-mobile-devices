@@ -18,7 +18,16 @@
     "hardBoard": "Hard",
     "savedBoard": "Board saved successfully",
     "savedBoardError": "Failed to save board",
-    "saveTheBoard": "Save board for later"
+    "saveTheBoard": "Save board for later",
+    "cantBeChanged": "This cell can't be changed",
+    "solvedBoard": "Congratulations! You solved the board!",
+    "solvedBoardError": "Sorry, you didn't solve the board",
+    "noBoardFoundForDifficulty": "No board found for this difficulty",
+    "failedToFetchNewBoard" : "Failed to fetch new board. Please try again.",
+    "saveNewBoard": "Save new board",
+    "genereteNewBoard": "Generate new board",
+    "selectDifficulty": "Select difficulty"
+
 
 
 }

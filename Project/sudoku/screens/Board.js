@@ -70,29 +70,30 @@ export default function Board() {
             let selectedCellData = boardData[rowIndex][cellIndex];
 
             if (selectedCellData.isPredefined) {
-                showToast('Dette tallet kan ikke endres eller slettes.');
+                showToast(t('cantBeChanged'));
             } else {
                 let newBoardData = [...boardData];
                 if (newValue === 'Delete') {
                     newBoardData[rowIndex][cellIndex].value = "";
-                    newBoardData[rowIndex][cellIndex].color = 'transparent';
+                    newBoardData[rowIndex][cellIndex].isUncertain = false;
                 } else if (newValue === 'Red') {
-                    newBoardData[rowIndex][cellIndex].color = "red";
+                    newBoardData[rowIndex][cellIndex].isUncertain = true;
                 }
                 else {
                     newBoardData[rowIndex][cellIndex].value = newValue;
                     newBoardData[rowIndex][cellIndex].color = 'transparent';
+                    newBoardData[rowIndex][cellIndex].isUncertain = false;
                 }
                 setBoardData(newBoardData);
                 setSelectedCell(null);
 
                 if (checkIfBoardIsSolved()) {
-                    showToast("Gratulerer, du har løst brettet!");
+                    showToast(t('solvedBoard'));
                 }
                 saveBoardToStorage(newBoardData, solution);
             }
         }
-    }
+    };
 
     const loadBoard = async (difficulty) => {
         try {
@@ -115,10 +116,10 @@ export default function Board() {
                 setSolution(boardDetails.solution);
                 setSelectedDifficulty(difficulty);
             } else {
-                showToast("Fant ingen brett med vanskelighetsgraden: " + difficulty);
+                showToast(t('noBoardFoundForDifficulty'));
             }
         } catch (error) {
-            showToast(t('failedToLoadBoard') + ": " + error.message);
+            showToast(t('failedToLoadBoard'));
         }
     };
 
@@ -180,16 +181,22 @@ export default function Board() {
                     <NumbersToSelect onSelectNumber={updateCell} />
                 </View>
             ) : (
-                <View>
-                    <Pressable className="bg-green-400 p-2 rounded-lg"  onPress={() => loadBoard('easy')} >
-                        <Text >{t('easyBoard')}</Text>
-                    </Pressable>
-                    <Pressable className="bg-yellow-300 p-2 rounded-lg" onPress={() => loadBoard('normal')} >
-                        <Text >{t('normalBoard')}</Text>
-                    </Pressable>
-                    <Pressable className="bg-red-500 p-2 rounded-lg" onPress={() => loadBoard('hard')} >
-                        <Text >{t('hardBoard')}</Text>
-                    </Pressable>
+
+                <View className="w-full flex justify-center place-items-center items-center">
+                    <View>
+                        <Text style={styles.title} className="text-6xl ">{t('selectDifficulty')}</Text>
+                    </View>
+                    <View>
+                        <Pressable className="bg-green-400 p-2 rounded-lg "  onPress={() => loadBoard('easy')} >
+                            <Text >{t('easyBoard')}</Text>
+                        </Pressable>
+                        <Pressable className="bg-yellow-300 p-2 rounded-lg" onPress={() => loadBoard('normal')} >
+                            <Text >{t('normalBoard')}</Text>
+                        </Pressable>
+                        <Pressable className="bg-red-500 p-2 rounded-lg" onPress={() => loadBoard('hard')} >
+                            <Text >{t('hardBoard')}</Text>
+                        </Pressable>
+                    </View>
                 </View>
             )}
         </View>
@@ -204,14 +211,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 2,
-        backgroundColor: '#fff',
+        backgroundColor: '#121212'
     },
 
     boardHolder:{
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: '#121212'
     },
+    title: {
+        fontWeight: 'bold',
+        color: '#FFFFFF',
+        fontSize: 30,
+    },
+    background: {
+        backgroundColor: '#121212'
+    },
+    backgroundForButton: {
+        backgroundColor: '#FFFFFF',
+    },
+    colorForText: {
+        color: '#000000',
+    }
 
 });

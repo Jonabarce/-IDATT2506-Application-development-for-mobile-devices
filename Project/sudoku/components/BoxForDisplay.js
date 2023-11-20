@@ -1,22 +1,19 @@
-import React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
-import Cell from '../components/Cell';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import CellForDisplay from '../components/CellForDisplay';
 
-const Box = ({ rowData, rowIndex, onSelectCell }) => {
+const BoxForDisplay = ({ rowData, rowIndex }) => {
     return (
         <View style={styles.box}>
             {rowData.map((number, cellIndex) => (
-                <Cell
+                <CellForDisplay
                     key={cellIndex}
                     number={number}
-                    onSelect={() => onSelectCell([rowIndex, cellIndex])}
-                    isPredefined={number.isPredefined}
-                    isUncertain={number.isUncertain}
                 />
             ))}
         </View>
     );
 };
+
 
 
 
@@ -35,4 +32,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Box;
+export default BoxForDisplay;
