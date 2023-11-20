@@ -7,15 +7,17 @@ import {useTranslation} from "react-i18next";
 import easyBoard from '../assets/data/easy.json';
 import normalBoard from '../assets/data/normal.json';
 import hardBoard from '../assets/data/hard.json';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 export default function GenerateBoard() {
-const [selectedDifficulty, setSelectedDifficulty] = useState(null);
-const [boardData, setBoardData] = useState([]);
-const [solution, setSolution] = useState([]);
-const [selectedCell, setSelectedCell] = useState(null);
-const { t } = useTranslation();
+    const navigation = useNavigation();
+    const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+    const [boardData, setBoardData] = useState([]);
+    const [solution, setSolution] = useState([]);
+    const [selectedCell, setSelectedCell] = useState(null);
+    const { t } = useTranslation();
 
     useEffect(() => {
         saveBoardFirstTime();
@@ -100,7 +102,7 @@ const { t } = useTranslation();
                 console.log("API Solution Data:", responseData.newboard.grids[0].solution);
                 const reformattedSolutionData = reformatGridData(apiSolutionData);
                 console.log("Solution reformatted:", reformattedSolutionData);
-
+                setSolution(reformattedSolutionData);
                 console.log("Difficulty:", responseData.newboard.grids[0].difficulty);
                 setSelectedDifficulty(difficulty);
             } catch (jsonError) {
@@ -125,6 +127,9 @@ const { t } = useTranslation();
         console.log("BoardToSave:", boardToSave);
         boards.push(boardToSave);
         await AsyncStorage.setItem('currentBoardsToPlayWith', JSON.stringify(boards));
+        showToast(t('savedBoard'));
+        navigation.navigate('Home');
+        navigation.navigate('GenerateBoard');
     };
 
     const deleteRandomBoardsFromApiFromStorage = async () => {
@@ -160,7 +165,6 @@ const { t } = useTranslation();
                     </View>
                 </>
             ) : (
-
                 <View className="w-full flex justify-center place-items-center items-center">
                     <View>
                         <Text style={styles.title} className="text-6xl ">{t('selectDifficulty')}</Text>

@@ -26,7 +26,13 @@
     "failedToFetchNewBoard" : "Failed to fetch new board. Please try again.",
     "saveNewBoard": "Save new board",
     "genereteNewBoard": "Generate new board",
-    "selectDifficulty": "Select difficulty"
+    "selectDifficulty": "Select difficulty",
+    "home": "Home",
+    "board": "Board",
+    "rules": "Rules",
+    "generate": "Generate Board",
+    "delete": "Delete",
+    "notSure": "Not sure"
 
 
 

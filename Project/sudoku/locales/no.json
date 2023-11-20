@@ -26,5 +26,11 @@
     "failedToFetchNewBoard" : "Klarte ikke å hente nytt brett. Prøv igjen.",
     "saveNewBoard": "Lagre nytt brett",
     "generateNewBoard": "Generer nytt brett",
-    "selectDifficulty": "Velg vanskelighetsgrad"
+    "selectDifficulty": "Velg vanskelighetsgrad",
+    "home": "Hjem",
+    "board": "Brett",
+    "rules": "Regler",
+    "generate": "Lag brett",
+    "delete": "Slett",
+    "notSure": "Ikke sikker"
 }

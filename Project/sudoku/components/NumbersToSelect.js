@@ -1,8 +1,13 @@
 import {TouchableOpacity, View, StyleSheet, Text} from "react-native";
+import {useTranslation} from "react-i18next";
+
 
 
 export default function NumbersToSelect({onSelectNumber})  {
-    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, "Delete", "Not sure"];
+    const { t } = useTranslation();
+
+
+    let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, t('delete'), t('notSure')];
     return (
         <View style={styles.numbersToSelect}>
             {numbers.map((number) => (

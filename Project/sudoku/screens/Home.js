@@ -31,9 +31,10 @@ export default function Home() {
                    visible={visible}
                    onRequestClose={() => setVisible(false)}
                    animationType="slide"
-                   transparent={false}
+                   transparent={true}
+                   style={styles.background}
             >
-                <View className="flex-1 items-center justify-center p-4 mx-4 mt-20 bg-white">
+                <View style={styles.background} className="flex-1 items-center justify-center p-4 mx-4 mt-20 bg-white">
                     <FlatList
                         data={Object.keys(languagesList)}
                         renderItem={({ item }) => (

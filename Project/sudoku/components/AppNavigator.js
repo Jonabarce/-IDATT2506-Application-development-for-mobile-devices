@@ -4,11 +4,16 @@ import BoardScreen from '../screens/Board';
 import HomeScreen from '../screens/Home';
 import RulesScreen from '../screens/Rules';
 import GenerateBoardScreen from "../screens/GenerateBoard";
-import {StyleSheet} from "react-native";
+import {useTranslation} from "react-i18next";
+
+
 
 const Stack = createNativeStackNavigator();
 
 export default function AppNavigator() {
+
+    const { t } = useTranslation();
+
     return (
         <NavigationContainer >
             <Stack.Navigator initialRouteName="Home">
@@ -30,7 +35,7 @@ export default function AppNavigator() {
                     name="Board"
                     component={BoardScreen}
                     options={{
-                        title: '',
+                        title: t('board'),
                         headerStyle: {
                             backgroundColor: '#121212',
                         },
@@ -44,7 +49,7 @@ export default function AppNavigator() {
                     name="GenerateBoard"
                     component={GenerateBoardScreen}
                     options={{
-                        title: '',
+                        title: t('generate'),
                         headerStyle: {
                             backgroundColor: '#121212',
                         },
@@ -58,7 +63,7 @@ export default function AppNavigator() {
                     name="Rules"
                     component={RulesScreen}
                     options={{
-                        title: '',
+                        title: t('rules'),
                         headerStyle: {
                             backgroundColor: '#121212',
                         },

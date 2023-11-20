@@ -27,6 +27,8 @@ export default function Board() {
     }, []);
 
     const setTheBoardData = (savedBoard, savedSolution) => {
+        console.log("Setting board:", savedBoard);
+        console.log("Setting solution:", savedSolution);
         setBoardData(savedBoard);
         setSolution(savedSolution);
     }
@@ -73,10 +75,10 @@ export default function Board() {
                 showToast(t('cantBeChanged'));
             } else {
                 let newBoardData = [...boardData];
-                if (newValue === 'Delete') {
+                if (newValue === 'Delete' || newValue === 'Slett') {
                     newBoardData[rowIndex][cellIndex].value = "";
                     newBoardData[rowIndex][cellIndex].isUncertain = false;
-                } else if (newValue === 'Red') {
+                } else if (newValue === 'Not sure' || newValue === 'Ikke sikker') {
                     newBoardData[rowIndex][cellIndex].isUncertain = true;
                 }
                 else {
@@ -86,11 +88,11 @@ export default function Board() {
                 }
                 setBoardData(newBoardData);
                 setSelectedCell(null);
+                saveBoardToStorage(newBoardData, solution);
 
                 if (checkIfBoardIsSolved()) {
                     showToast(t('solvedBoard'));
                 }
-                saveBoardToStorage(newBoardData, solution);
             }
         }
     };
@@ -115,6 +117,7 @@ export default function Board() {
                 console.log("Solution:", boardDetails.solution);
                 setSolution(boardDetails.solution);
                 setSelectedDifficulty(difficulty);
+                saveBoardToStorage(convertedBoard, boardDetails.solution);
             } else {
                 showToast(t('noBoardFoundForDifficulty'));
             }
@@ -154,6 +157,8 @@ export default function Board() {
     };
 
     const checkIfBoardIsSolved = () => {
+        console.log("Checking if board is solved");
+        console.log("Board:", boardData);
         for (let i = 0; i < boardData.length; i++) {
             for (let j = 0; j < boardData[i].length; j++) {
                 if (boardData[i][j].value !== solution[i][j]) {
