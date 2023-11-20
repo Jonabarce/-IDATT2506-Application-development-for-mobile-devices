@@ -147,7 +147,6 @@ export default function Board() {
             if (!currentBoards) {
                 const boardsToSave = [easyBoard, normalBoard, hardBoard];
                 await AsyncStorage.setItem('currentBoardsToPlayWith', JSON.stringify(boardsToSave));
-                showToast(t('boardsSaved'));
             }
         } catch (error) {
             showToast(t('saveBoardError'));
