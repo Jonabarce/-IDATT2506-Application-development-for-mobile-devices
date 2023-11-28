@@ -25,14 +25,17 @@
     "noBoardFoundForDifficulty": "No board found for this difficulty",
     "failedToFetchNewBoard" : "Failed to fetch new board. Please try again.",
     "saveNewBoard": "Save new board",
-    "genereteNewBoard": "Generate new board",
+    "generateNewBoard": "Generate new board",
     "selectDifficulty": "Select difficulty",
     "home": "Home",
     "board": "Board",
     "rules": "Rules",
     "generate": "Generate Board",
     "delete": "Delete",
-    "notSure": "Not sure"
+    "notSure": "Not sure",
+    "theEasyDifficulty": "Difficulty: Easy",
+    "theNormalDifficulty": "Difficulty: Normal",
+    "theHardDifficulty": "Difficulty: Hard"
 
 
 

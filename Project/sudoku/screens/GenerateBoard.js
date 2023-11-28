@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {View, StyleSheet, ToastAndroid, Button, Alert, Pressable, Text} from 'react-native';
-import i18next from "../services/i18next";
+import {View, StyleSheet, Button, Alert, Pressable, Text} from 'react-native';
+import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import BoxForDisplay from '../components/BoxForDisplay';
 import {useTranslation} from "react-i18next";
@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function GenerateBoard() {
     const navigation = useNavigation();
-    const [selectedDifficulty, setSelectedDifficulty] = useState(null);
+    const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [boardData, setBoardData] = useState([]);
     const [solution, setSolution] = useState([]);
     const [selectedCell, setSelectedCell] = useState(null);
@@ -36,7 +36,7 @@ export default function GenerateBoard() {
     };
 
     function showToast (text) {
-        ToastAndroid.show(text, ToastAndroid.SHORT);
+        Toast.show(text, Toast.SHORT);
     }
 
     function reformatGridData(apiGridData) {
@@ -59,26 +59,13 @@ export default function GenerateBoard() {
         return theSudokuGroups;
     }
 
-    const getNewRandomBoardFromAPI = async (difficulty) => {
+    const getNewRandomBoardFromAPI = async () => {
         try {
-            const query = JSON.stringify({
-                query: `{
-                newboard(limit: 1, difficulty: "${difficulty}") {
-                    grids {
-                        value
-                        solution
-                        difficulty
-                    }
-                }
-            }`
-            });
-
             const response = await fetch('https://sudoku-api.vercel.app/api/dosuku', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                },
-                body: query,
+                }
             });
 
             if (!response.ok) {
@@ -104,7 +91,8 @@ export default function GenerateBoard() {
                 console.log("Solution reformatted:", reformattedSolutionData);
                 setSolution(reformattedSolutionData);
                 console.log("Difficulty:", responseData.newboard.grids[0].difficulty);
-                setSelectedDifficulty(difficulty);
+                const apiDifficulty = responseData.newboard.grids[0].difficulty.toLowerCase();
+                setSelectedDifficulty(apiDifficulty);
             } catch (jsonError) {
                 console.error("JSON Parsing Error:", jsonError);
                 throw new Error('Failed to parse JSON');
@@ -132,14 +120,6 @@ export default function GenerateBoard() {
         navigation.navigate('GenerateBoard');
     };
 
-    const deleteRandomBoardsFromApiFromStorage = async () => {
-
-    }
-
-    const listRandomBoardsFromApiFromStorage = async () => {
-
-    }
-
 
 
     return (
@@ -156,6 +136,14 @@ export default function GenerateBoard() {
                         ))}
                     </View>
                     <View>
+                        <View>
+                            <Text style={styles. colorForTextButtonDifficulty}>
+                                {selectedDifficulty === 'easy' ? t('theEasyDiffiulty') :
+                                    selectedDifficulty === 'medium' ? t('theNormalDifficulty') :
+                                        selectedDifficulty === 'hard' ? t('theHardDifficulty') :
+                                            ''}
+                            </Text>
+                        </View>
                         <Pressable className="bg-blue-400 p-2 rounded-lg" onPress={saveRandomBoardFromApi} >
                             <Text style={styles.colorForTextButton} >{t('saveNewBoard')}</Text>
                         </Pressable>
@@ -166,20 +154,9 @@ export default function GenerateBoard() {
                 </>
             ) : (
                 <View className="w-full flex justify-center place-items-center items-center">
-                    <View>
-                        <Text style={styles.title} className="text-6xl ">{t('selectDifficulty')}</Text>
-                    </View>
-                    <View>
-                        <Pressable className="bg-green-400 p-2 rounded-lg"  onPress={() => getNewRandomBoardFromAPI('easy')} >
-                            <Text >{t('easyBoard')}</Text>
-                        </Pressable>
-                        <Pressable className="bg-yellow-300 p-2 rounded-lg" onPress={() => getNewRandomBoardFromAPI('normal')} >
-                            <Text >{t('normalBoard')}</Text>
-                        </Pressable>
-                        <Pressable className="bg-red-500 p-2 rounded-lg" onPress={() => getNewRandomBoardFromAPI('hard')} >
-                            <Text >{t('hardBoard')}</Text>
-                        </Pressable>
-                    </View>
+                    <Pressable className="bg-blue-400 p-2 rounded-lg" onPress={getNewRandomBoardFromAPI} >
+                        <Text>{t('generateNewBoard')}</Text>
+                    </Pressable>
                 </View>
             )}
         </View>
@@ -222,6 +199,10 @@ const styles = StyleSheet.create({
 
     colorForTextButton: {
         color: '#FFFFFF',
+    },
+    colorForTextButtonDifficulty: {
+        color: '#FFFFFF',
+        fontSize: 20,
     }
 
 });

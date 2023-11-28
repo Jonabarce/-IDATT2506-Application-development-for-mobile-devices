@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {View, StyleSheet, ToastAndroid, Button, Alert, Pressable, Text} from 'react-native';
-import i18next from "../services/i18next";
+import {View, StyleSheet, Button, Alert, Pressable, Text} from 'react-native';
+import Toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Box from '../components/Box';
 import NumbersToSelect from '../components/NumbersToSelect';
@@ -18,7 +18,7 @@ export default function Board() {
     const { t } = useTranslation();
 
     function showToast (text) {
-        ToastAndroid.show(text, ToastAndroid.SHORT);
+        Toast.show(text, Toast.SHORT);
     }
 
     useEffect(() => {

@@ -32,5 +32,8 @@
     "rules": "Regler",
     "generate": "Lag brett",
     "delete": "Slett",
-    "notSure": "Ikke sikker"
+    "notSure": "Ikke sikker",
+    "theEasyDifficulty": "Vanskelighetsgrad: Lett",
+    "theNormalDifficulty": "Vanskelighetsgrad: Normal",
+    "theHardDifficulty": "Vanskelighetsgrad: Vanskelig"
 }
